@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Movie Recommendation System</title>
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #141e30, #243b55);
+            color: white;
+            padding: 40px;
+            text-align: center;
+        }
+
+        h1 {
+            margin-bottom: 30px;
+        }
+
+        select {
+            padding: 10px;
+            width: 250px;
+            border-radius: 8px;
+            border: none;
+            margin-bottom: 20px;
+        }
+
+        button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            background: linear-gradient(to right, #0072ff, #00c6ff);
+            color: white;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        button:hover {
+            opacity: 0.9;
+        }
+
+        .movie-grid {
+            margin-top: 40px;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            gap: 20px;
+        }
+
+        .movie-card {
+            background: rgba(255,255,255,0.1);
+            border-radius: 12px;
+            overflow: hidden;
+            transition: 0.3s;
+        }
+
+        .movie-card img {
+            width: 100%;
+            height: 260px;
+            object-fit: cover;
+        }
+
+        .movie-card h4 {
+            padding: 10px;
+            font-size: 14px;
+        }
+
+        .movie-card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.6);
+        }
+
+        a {
+            text-decoration: none;
+            color: white;
+        }
+
+    </style>
+</head>
+<body>
+
+    <h1>🎬 Movie Recommendation System</h1>
+
+    <form method="POST">
+        {% csrf_token %}
+
+        <select name="movie" required>
+            <option hidden>Select a movie</option>
+            {% for movie in movies %}
+                <option>{{ movie }}</option>
+            {% endfor %}
+        </select>
+
+        <br>
+        <button type="submit">Show Recommendation</button>
+    </form>
+
+    {% if result %}
+    <div class="movie-grid">
+        {% for mov in result %}
+        <a href="{{ mov.imdb }}" target="_blank">
+            <div class="movie-card">
+                {% if mov.poster %}
+                    <img src="{{ mov.poster }}" alt="{{ mov.title }}">
+                {% else %}
+                    <img src="https://via.placeholder.com/300x450?text=No+Image">
+                {% endif %}
+                <h4>🍿 {{ mov.title }}</h4>
+            </div>
+        </a>
+        {% endfor %}
+    </div>
+    {% endif %}
+
+</body>
+</html>
