@@ -2,7 +2,7 @@
 1. **Clone the repo**
    ```bash
    git clone https://github.com/MOHDSOHAIL06/Movie_Recommendation_System.git
-   cd movie-recommendation-app
+   cd Movie_Recommendation_System
    ```
 
 2. **Install dependencies**
